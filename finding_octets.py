@@ -25,3 +25,4 @@ while last_octet <= 0.3:
     print("IP int from " + ip)
     print("_" * 80)
     last_octet += .1
+    last_octet = round(last_octet, 2)
