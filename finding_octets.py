@@ -1,7 +1,7 @@
 import netmiko
 
-ip = ""
-last_octet = 1
+ip_start = ""
+last_octet = 0.1
 
 port = ""
 device_type = ""
@@ -18,9 +18,10 @@ def get_ip_int_br(ip):
     )
     return net_connect.send_command("show ip interface brief")
 
-while last_octet <= 3:
-    ip = ip + str(last_octet)
-    ip_int_br = get_ip_int_br(ip)
-    print(ip_int_br)
-    print("-" * 80)
-    last_octet +=1
+while last_octet <= 0.3:
+    ip = ip_start + str(last_octet)
+    ip_int = get_ip_int_br(ip)
+    print(ip_int)
+    print("IP int from " + ip)
+    print("_" * 80)
+    last_octet += .1
