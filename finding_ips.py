@@ -1,18 +1,21 @@
 import netmiko
-
-ip_list = [
-    "",
-    "",
-    ""
-]
+import pprint
 
 port = ""
 device_type = ""
 username = ""
 password = ""
 
+
+ips = (
+    "",
+    "",
+    ""
+)
+
 output_list = []
-for ip in ip_list:
+
+for ip in ips:
     net_connect = netmiko.ConnectHandler(
         ip = ip,
         port = port,
@@ -20,8 +23,13 @@ for ip in ip_list:
         username = username,
         password = password
     )
-    output = net_connect.send_command("show ip interface brief")
+    hostname = net_connect.send_command(
+        'sh run | include hostname'
+    ).strip()
+    ios_xe_version = net_connect.send_command(
+        'sh version | section Cisco IOS XE Software, Version'
+    ).strip()
+    output = (hostname , ios_xe_version)
     output_list.append(output)
 
-for output in output_list:
-    print(output)
+pprint.pprint(output_list)
